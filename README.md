@@ -14,6 +14,9 @@ Create a git repo that has a scrapy project at the root (scrapy.cfg should be at
 top level). Edit your scrapy.cfg to include the following::
 
 ```python
+[settings]
+default = <YOUR_PROJECT_NAME>.settings
+
 [scrapyd]
 application = scrapy_heroku.app.application
 
