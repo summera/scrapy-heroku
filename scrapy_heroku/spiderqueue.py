@@ -38,9 +38,12 @@ class Psycopg2PriorityQueue(object):
 
     def _execute(self, q, args=None, results=True):
 
+        print 'PRINTING CONNECTION STATuS'
         print self.conn.status
 
         self.conn.close()
+
+        print '***********************************'
 
         print self.conn.status
 
