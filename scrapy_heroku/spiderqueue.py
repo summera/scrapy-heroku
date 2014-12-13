@@ -2,7 +2,9 @@ import psycopg2
 import cPickle
 import json
 import urlparse
+import time
 from zope.interface import implements
+from twisted.python import log
 
 from scrapyd.interfaces import ISpiderQueue
 
@@ -36,8 +38,20 @@ class Psycopg2PriorityQueue(object):
 
     def _execute(self, q, args=None, results=True):
 
+        print self.conn.status
+
+        self.conn.close()
+
+        print self.conn.status
+
         if not self.conn.status:
+            log.msg('Database Connection closed. Trying to reconnect.')
             self.conn = psycopg2.connect(self.conn_string)
+
+            # if not self.conn.status:
+            #     log.msg("Couldn't reconnect to Database. Trying to again in 5 seconds.")
+            #     time.sleep(5)
+            #     return self._execute(q, args, results)
 
         cursor = self.conn.cursor()
         cursor.execute(q, args)
